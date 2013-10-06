@@ -8,6 +8,9 @@
 
 #import "AppDelegate.h"
 
+#define D_SHOW_DIVIDEBYZERO_BUG 0
+#define D_SHOW_INDEXOUTOFRANGE_BUG 0
+
 @implementation AppDelegate
 
 // Buttons.
@@ -29,34 +32,56 @@
 - (IBAction)myButtonAction:(id)a_sender;
 {
     
+    // Use an array to hold the valid operations
+    NSArray *l_validOperations = [NSArray arrayWithObjects: @"+",
+                                  @"-",
+                                  @"x",
+                                  @"÷",
+                                  nil];
+    
     // Get the button title (+, -, x, or ÷) to
     // determine which operation the App will
     // preform
     NSString *l_operation = [a_sender title];
     // Get a double precision number from the
     // first text field
-    double l_value1 = [mValue1 doubleValue];
+    // To make this buggy we use int instead of double
+    #if D_SHOW_DIVIDEBYZERO_BUG
+        int l_value1 = [mValue1 doubleValue];
+    #else
+        double l_value1 = [mValue1 doubleValue];
+    #endif
     // Get a double precision number from the
     // second text field
-    double l_value2 = [mValue2 doubleValue];
+    // To make this buggy we use int instead of double
+    #if D_SHOW_DIVIDEBYZERO_BUG
+        int l_value2 = [mValue2 doubleValue];
+    #else
+        double l_value2 = [mValue2 doubleValue];
+    #endif
+    
     // Create a double precision variable to
     // hold the result of l_value1 <op> l_value2
     double l_result;
     // If the operation was addition, then
     // add the two values
-    if ([@"+" isEqual: l_operation])
+    if ([[l_validOperations objectAtIndex:0] isEqual: l_operation])
     {
         l_result = l_value1 + l_value2;
     }
     // If the operation was subtraction, then
     // subtract the two values
-    else if ([@"-" isEqual: l_operation])
+    else if ([[l_validOperations objectAtIndex:0] isEqual: l_operation])
     {
         l_result = l_value1 - l_value2;
     }
     // If the operation was multiplication, then
     // multiply the two values
-    else if ([@"x" isEqual: l_operation])
+    #if D_SHOW_INDEXOUTOFRANGE_BUG
+        else if ([[l_validOperations objectAtIndex:22] isEqual: l_operation])
+    #else
+        else if ([[l_validOperations objectAtIndex:2] isEqual: l_operation])
+    #endif
     {
         l_result = l_value1 * l_value2;
     }

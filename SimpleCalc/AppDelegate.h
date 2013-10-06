@@ -12,4 +12,21 @@
 
 @property (assign) IBOutlet NSWindow *window;
 
+/**
+ * Create the user interface elements.
+ */
+
+// Buttons.
+@property (assign) IBOutlet NSButton *mAdd;
+@property (assign) IBOutlet NSButton *mSubtract;
+@property (assign) IBOutlet NSButton *mMultiply;
+@property (assign) IBOutlet NSButton *mDivide;
+
+// Text Fields.
+@property (weak) IBOutlet NSTextField *mValue1;
+@property (weak) IBOutlet NSTextField *mValue2;
+@property (weak) IBOutlet NSTextField *mResult;
+
+- (IBAction)myButtonAction:(id)sender;
+
 @end
